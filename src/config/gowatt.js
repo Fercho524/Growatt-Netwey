@@ -1,4 +1,4 @@
-const Growatt = require('growatt')
+import Growatt from 'growatt'
 
 const options={}
 
@@ -12,4 +12,6 @@ const growattLogin = async ()=>{
     return myapi;
 }
 
-module.exports = growattLogin
+const growattAPI = await growattLogin()
+
+export default growattAPI;

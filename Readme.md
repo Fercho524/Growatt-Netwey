@@ -6,9 +6,9 @@
 - [ ] GET,PUT,DELETE /plant/:id
 - [ ] POST /plant/:id/history
 - [ ] GET /plant/:id/day
-
+plants
 ## Dataloggers
-- [ ] GET /datalogger/list
+- [x] GET /datalogger/list
 - [ ] POST /datalogger/add
 - [ ] GET,PUT,DELETE /datalogger/:id
 
