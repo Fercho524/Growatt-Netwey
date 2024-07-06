@@ -1,9 +1,9 @@
-import growattAPI from "../config/gowatt.js"
+import growatt from "../config/gowatt.js"
+
 
 export const getPlants = async (req, res) => {
     try {
-        let getAllPlantData = await growattAPI.getAllPlantData().catch(e => { console.log(e); });
-        console.log(getAllPlantData);
+        let getAllPlantData = await growatt.session.getAllPlantData().catch(e => { console.log(e); });
         res.json(getAllPlantData);
     } catch (error) {
         res.status(500).json({ error: error.message });

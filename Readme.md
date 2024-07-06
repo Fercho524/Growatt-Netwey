@@ -31,3 +31,12 @@ plants
 - [ ] POST /device/inverter/freqThreshold 
 
 
+y, las siguientes rutas implementan sistemas de notificación por correo electrónico
+
+- [ ] GET /device/inverter/:sn/alarm (Email Notification Backend Monitoring. Voltage, Frequency, etc)
+- [ ] POST /device/storage/alarm (Email Notification Backend Monitoring, Energy fall, etc)
+
+además de que las rutas siguientes, que por el momento no has implementado, utilizan la base de datos para guardar los respectivos umbrales de voltaje y frecuencia para activar las alarmas en los inversores. Todos estos datos los guardarás dentro de la colección "inversores" y la colección "paneles_alarma" dentro de firestore.
+
+- [ ] POST /device/inverter/voltThreshold 
+- [ ] POST /device/inverter/freqThreshold

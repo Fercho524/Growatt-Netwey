@@ -1,4 +1,4 @@
-import {config} from 'dotenv'
+import { config } from 'dotenv'
 import db from "../config/firebase.js"
 import jwt from 'jsonwebtoken';
 
@@ -20,7 +20,16 @@ export const loginUser = async (req, res) => {
         }
 
         const user = userSnapshot.docs[0].data();
-        const token = jwt.sign({ id: user.id, nombre: user.nombre, email: user.email, rol: user.rol }, SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign(
+            {
+                id: user.id,
+                nombre: user.nombre,
+                email: user.email,
+                rol: user.rol
+            },
+            SECRET_KEY,
+            { expiresIn: '168h' }
+        );
 
         res.json({ token });
     } catch (error) {

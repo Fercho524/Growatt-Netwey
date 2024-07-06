@@ -21,7 +21,7 @@ const db = getFirestore();
 
 
 if (database) {
-    console.log('Db is connected to firebase')
+    console.log('CONNECT Connected to firebase')
 }
 
 export default db;

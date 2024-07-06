@@ -1,7 +1,7 @@
 {
-  "name": "api",
+  "name": "growatt-netwey",
   "version": "1.0.0",
-  "description": "",
+  "description": "Growatt data provider for netwey",
   "main": "index.js",
   "type": "module",
   "scripts": {
