@@ -1,16 +1,16 @@
 # Growatt API Endpoints
 
 ## Plantas
-- [x] GET /plant/list
-- [ ] POST /plant/add 
-- [ ] GET,PUT,DELETE /plant/:id
-- [ ] POST /plant/:id/history
-- [ ] GET /plant/:id/day
-plants
+- [x] Listar todas las plantas GET /plant/list
+- [ ] Añadir una planta POST /plant/add 
+- [ ] Conocer los detalles de una planta, actualizar o eliminar una planta GET,PUT,DELETE /plant/:id
+- [ ] obtener el historial de una planta entre 2 fechas GET /plant/:id/history
+- [ ] Obtener la generaión de energía de una planta durante un día GET /plant/:id/day
+
 ## Dataloggers
-- [x] GET /datalogger/list
-- [ ] POST /datalogger/add
-- [ ] GET,PUT,DELETE /datalogger/:id
+- [x] Ver todos los dataloggers GET /datalogger/list 
+- [ ] Añadir un nuevo datalogger POST /datalogger/add
+- [ ] Consultar información, actualizar parámetros, eliminar datalogger GET,PUT,DELETE /datalogger/:id
 
 ## Inversores
 - [ ] GET /device/:plantID/list
