@@ -7,12 +7,13 @@ config()
 const SECRET_KEY = process.env.SECRET_KEY
 
 export const loginUser = async (req, res) => {
-    const { nombre, email } = req.body;
+    const { nombre, email,apellidos } = req.body;
 
     try {
         const userSnapshot = await db.collection('usuarios')
             .where('nombre', '==', nombre)
             .where('email', '==', email)
+            .where('apellidos','==',apellidos)
             .get();
 
         if (userSnapshot.empty) {
