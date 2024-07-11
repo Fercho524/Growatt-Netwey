@@ -26,11 +26,11 @@ app.use(express.json())
 // Routes
 app.use('/api',indexRoutes)
 app.use('/api/auth',authRoutes)
-app.use('/api/dataloggers',dataloggersRoutes)
-app.use('/api/inverters',inverterRoutes)
+app.use('/api/config',threesholdRoutes)
 app.use('/api/plants', plantRoutes)
-app.use('/api/storage',storageRoutes)
-app.use('/api/threeshold',threesholdRoutes)
+app.use('/api/dataloggers',dataloggersRoutes)
+app.use('/api/device/storage',storageRoutes)
+app.use('/api/device/inverters',inverterRoutes)
 
 
 export default app;
