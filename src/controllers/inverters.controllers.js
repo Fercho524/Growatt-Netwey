@@ -21,7 +21,13 @@ export const getInverterDetails = async (req, res) => {
     try {
         const { sn } = req.params;
 
-        const allPlantData = await growatt.api.getAllPlantData({});
+        const allPlantData = await growatt.api.getAllPlantData({
+            deviceData : true,
+            plantData : false,
+            weather : false,
+            statusData: false,
+            historyLast: false
+        });
         const inverter = allPlantData.devices[sn] || null;
 
         if (!inverter) {

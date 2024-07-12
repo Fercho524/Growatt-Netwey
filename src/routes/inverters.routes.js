@@ -6,13 +6,13 @@ import { growattLogin } from "../middlewares/growattLogin.middleware.js";
 const router = Router()
 
 
-router.get('/device/:plantID/list', verifyToken,growattLogin, invertersController.getInvertersByPlant);
-router.get('/device/inverter/:sn', verifyToken,growattLogin, invertersController.getInverterDetails);
-router.put('/device/inverter/:sn', verifyToken,growattLogin, invertersController.updateInverter);
-router.delete('/device/inverter/:sn', verifyToken,growattLogin, invertersController.deleteInverter);
-router.post('/device/inverter/:sn/history', verifyToken,growattLogin, invertersController.getInverterHistory);
-router.get('/device/inverter/:sn/lastData', verifyToken,growattLogin, invertersController.getInverterLastData);
-router.post('/device/inverter/batch', verifyToken,growattLogin, invertersController.getInvertersBatchData);
+router.get('/:plantID/list', verifyToken,growattLogin, inverterController.getInvertersByPlant);
+router.get('/:sn', verifyToken,growattLogin, inverterController.getInverterDetails);
+router.put('/:sn', verifyToken,growattLogin, inverterController.updateInverter);
+router.delete('/:sn', verifyToken,growattLogin, inverterController.deleteInverter);
+router.post('/:sn/history', verifyToken,growattLogin, inverterController.getInverterDetails);
+router.get('/:sn/lastData', verifyToken,growattLogin, inverterController.getInverterLastData);
+router.post('/batch', verifyToken,growattLogin, inverterController.getInvertersBatchData);
 
 
 export default router;
