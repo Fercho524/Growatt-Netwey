@@ -6,6 +6,7 @@ import { growattLogin } from "../middlewares/growattLogin.middleware.js";
 const router = Router()
 
 
+router.get('/list', verifyToken,growattLogin, inverterController.getAllInverters);
 router.get('/:plantID/list', verifyToken,growattLogin, inverterController.getInvertersByPlant);
 router.get('/:sn', verifyToken,growattLogin, inverterController.getInverterDetails);
 router.put('/:sn', verifyToken,growattLogin, inverterController.updateInverter);

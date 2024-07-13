@@ -1,6 +1,31 @@
 import growatt from "../config/gowatt.js"
 
 
+export const getAllInverters = async (req, res) => {
+    try {
+        const plants = await growatt.api.getAllPlantData({
+            deviceData : true,
+            plantData : false,
+            weather : false,
+            statusData: false,
+            historyLast: false
+        });
+
+        let devices = []
+
+        for (let plant of Object.keys(plants)){
+            for (let deviceId of Object.keys(plants[plant].devices)){   
+                devices.push(plants[plant].devices[deviceId])
+            }
+        }
+
+        res.json(devices)
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener detalles del inversor', error });
+    }
+};
+
+
 export const getInvertersByPlant = async (req, res) => {
     try {
         const { plantID } = req.params;
@@ -21,19 +46,29 @@ export const getInverterDetails = async (req, res) => {
     try {
         const { sn } = req.params;
 
-        const allPlantData = await growatt.api.getAllPlantData({
+        const plants = await growatt.api.getAllPlantData({
             deviceData : true,
             plantData : false,
             weather : false,
             statusData: false,
             historyLast: false
         });
-        const inverter = allPlantData.devices[sn] || null;
 
-        if (!inverter) {
+        let devices = []
+
+        for (let plant of Object.keys(plants)){
+            for (let deviceId of Object.keys(plants[plant].devices)){   
+                devices.push(plants[plant].devices[deviceId])
+            }
+        }
+
+        let device = devices.find((dev) => {  return dev.deviceData.sn == sn  })
+
+        if (!device){
             return res.status(404).json({ message: 'Dispositivo no encontrado' });
         }
-        res.json(inverter);
+
+        res.json(device)
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener detalles del inversor', error });
     }
@@ -80,6 +115,7 @@ export const getInverterHistory = async (req, res) => {
     }
 };
 
+
 export const getInverterLastData = async (req, res) => {
     try {
         const { sn } = req.params;
@@ -113,3 +149,4 @@ export const getInvertersBatchData = async (req, res) => {
         res.status(500).json({ message: 'Error al obtener los últimos datos de los inversores', error });
     }
 };
+

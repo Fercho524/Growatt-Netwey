@@ -21,16 +21,16 @@ export const setVoltageThreshold = async (req, res) => {
 }
 
 export const setFrequencyThreshold = async (req, res) => {
-    const { voltage: frecuency } = req.body
+    const { frequency } = req.body
 
-    if (frecuency) {
+    if (frequency) {
         try {
-            const frecuencyConfig = db.collection('config').doc('frecuency');
+            const frecuencyConfig = db.collection('config').doc('frequency');
             await frecuencyConfig.update({
-                voltage: frecuency
+                frequency: frequency
             });
 
-            res.json({ 'frecuency': frecuency })
+            res.json({ 'frequency': frequency })
         } catch (error) {
             res.status(501).json({ "error": "Error updating document: " });
         }
