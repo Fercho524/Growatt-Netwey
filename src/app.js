@@ -10,7 +10,6 @@ import dataloggersRoutes from './routes/dataloggers.routes.js'
 import indexRoutes from './routes/index.routes.js'
 import inverterRoutes from './routes/inverters.routes.js'
 import plantRoutes from './routes/plants.routes.js'
-import storageRoutes from './routes/storage.routes.js'
 import threesholdRoutes from './routes/threshold.routes.js'
 
 
@@ -29,7 +28,6 @@ app.use('/api/auth',authRoutes)
 app.use('/api/config',threesholdRoutes)
 app.use('/api/plants', plantRoutes)
 app.use('/api/dataloggers',dataloggersRoutes)
-app.use('/api/device/storage',storageRoutes)
 app.use('/api/device/inverters',inverterRoutes)
 
 

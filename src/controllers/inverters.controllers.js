@@ -4,17 +4,17 @@ import growatt from "../config/gowatt.js"
 export const getAllInverters = async (req, res) => {
     try {
         const plants = await growatt.api.getAllPlantData({
-            deviceData : true,
-            plantData : false,
-            weather : false,
+            deviceData: true,
+            plantData: false,
+            weather: false,
             statusData: false,
             historyLast: false
         });
 
         let devices = []
 
-        for (let plant of Object.keys(plants)){
-            for (let deviceId of Object.keys(plants[plant].devices)){   
+        for (let plant of Object.keys(plants)) {
+            for (let deviceId of Object.keys(plants[plant].devices)) {
                 devices.push(plants[plant].devices[deviceId])
             }
         }
@@ -47,24 +47,24 @@ export const getInverterDetails = async (req, res) => {
         const { sn } = req.params;
 
         const plants = await growatt.api.getAllPlantData({
-            deviceData : true,
-            plantData : false,
-            weather : false,
+            deviceData: true,
+            plantData: false,
+            weather: false,
             statusData: false,
             historyLast: false
         });
 
         let devices = []
 
-        for (let plant of Object.keys(plants)){
-            for (let deviceId of Object.keys(plants[plant].devices)){   
+        for (let plant of Object.keys(plants)) {
+            for (let deviceId of Object.keys(plants[plant].devices)) {
                 devices.push(plants[plant].devices[deviceId])
             }
         }
 
-        let device = devices.find((dev) => {  return dev.deviceData.sn == sn  })
+        let device = devices.find((dev) => { return dev.deviceData.sn == sn })
 
-        if (!device){
+        if (!device) {
             return res.status(404).json({ message: 'Dispositivo no encontrado' });
         }
 
@@ -118,16 +118,17 @@ export const getInverterHistory = async (req, res) => {
 
 export const getInverterLastData = async (req, res) => {
     try {
-        const { sn } = req.params;
+        const { plantID } = req.params;
 
         const options = {
-            plantId: sn,
+            plantId: plantID,
             historyLast: true,
         };
 
-        const lastData = await growatt.getAllPlantData(options);
+        const lastData = await growatt.api.getAllPlantData(options);
         res.json(lastData);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: 'Error al obtener los últimos datos del inversor', error });
     }
 };
@@ -135,18 +136,30 @@ export const getInverterLastData = async (req, res) => {
 
 export const getInvertersBatchData = async (req, res) => {
     try {
-        const { snList } = req.body;
+        const {deviceList} = req.body
 
-        const options = {
-            plantId: snList,
-            historyLast: true,
-        };
+        const plants = await growatt.api.getAllPlantData({
+            deviceData: true,
+            plantData: false,
+            weather: false,
+            statusData: false,
+            historyLast: true
+        });
 
-        const batchData = await growatt.api.getAllPlantData(options);
+        let deviceData = []
 
-        res.json(batchData);
+        for (let plant of Object.keys(plants)) {
+            for (let deviceId of Object.keys(plants[plant].devices)) {
+                if (deviceList.includes(deviceId)){
+                    deviceData.push(plants[plant].devices[deviceId])
+                }
+            }
+        }
+
+        res.json(deviceData)
     } catch (error) {
-        res.status(500).json({ message: 'Error al obtener los últimos datos de los inversores', error });
+        console.log(error)
+        res.status(500).json({ message: 'Error al obtener detalles del inversor', error });
     }
 };
 

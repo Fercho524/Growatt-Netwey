@@ -12,7 +12,7 @@ router.get('/:sn', verifyToken,growattLogin, inverterController.getInverterDetai
 router.put('/:sn', verifyToken,growattLogin, inverterController.updateInverter);
 router.delete('/:sn', verifyToken,growattLogin, inverterController.deleteInverter);
 router.post('/:sn/history', verifyToken,growattLogin, inverterController.getInverterDetails);
-router.get('/:sn/lastData', verifyToken,growattLogin, inverterController.getInverterLastData);
+router.get('/:plantID/lastData', verifyToken,growattLogin, inverterController.getInverterLastData);
 router.post('/batch', verifyToken,growattLogin, inverterController.getInvertersBatchData);
 
 

@@ -3,7 +3,14 @@ import growatt from "../config/gowatt.js"
 
 export const getPlants = async (req, res) => {
     try {
-        const options = { plantData: true, deviceData: false, weather: false, faultlog: false };
+        const options = { 
+            plantData: true, 
+            deviceData: false, 
+            weather: false, 
+            faultlog: false,
+            historyLast: false,
+            statusData: false,
+        };
         let getAllPlantData = await growatt.api.getAllPlantData(options)
         res.json(getAllPlantData);
     } catch (error) {
