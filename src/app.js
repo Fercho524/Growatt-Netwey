@@ -16,25 +16,6 @@ import threesholdRoutes from './routes/threshold.routes.js'
 // Config
 const app = express();
 
-
-// CORS
-app.use(
-    cors({
-        origin: "*",
-    })
-);
-
-app.use(
-    cors({
-        methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
-    })
-);
-
-app.use( (req, res, next) => {
-    res.setHeader("Content-Type", "application/json");
-    next();
-});
-
 // Middlewares
 app.use(morgan('dev'))
 app.use(express.json())
