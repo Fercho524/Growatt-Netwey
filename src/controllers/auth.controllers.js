@@ -1,5 +1,5 @@
 import { config } from 'dotenv'
-import db from "../config/firebase.js"
+import {db} from "../config/firebase.js"
 import jwt from 'jsonwebtoken';
 
 config()

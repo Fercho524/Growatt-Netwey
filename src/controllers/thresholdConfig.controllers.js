@@ -1,5 +1,5 @@
 import growatt from "../config/gowatt.js"
-import db from "../config/firebase.js"
+import {db} from "../config/firebase.js"
 
 
 

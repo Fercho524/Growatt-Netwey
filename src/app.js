@@ -1,4 +1,4 @@
-import {config} from 'dotenv'
+import { config } from 'dotenv'
 config()
 
 import express from 'express';
@@ -17,18 +17,36 @@ import threesholdRoutes from './routes/threshold.routes.js'
 const app = express();
 
 
+// CORS
+app.use(
+    cors({
+        origin: "*",
+    })
+);
+
+app.use(
+    cors({
+        methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
+    })
+);
+
+app.use( (req, res, next) => {
+    res.setHeader("Content-Type", "application/json");
+    next();
+});
+
 // Middlewares
 app.use(morgan('dev'))
 app.use(express.json())
 
 
 // Routes
-app.use('/api',indexRoutes)
-app.use('/api/auth',authRoutes)
-app.use('/api/config',threesholdRoutes)
+app.use('/api', indexRoutes)
+app.use('/api/auth', authRoutes)
+app.use('/api/config', threesholdRoutes)
 app.use('/api/plants', plantRoutes)
-app.use('/api/dataloggers',dataloggersRoutes)
-app.use('/api/device/inverters',inverterRoutes)
+app.use('/api/dataloggers', dataloggersRoutes)
+app.use('/api/device/inverters', inverterRoutes)
 
 
 export default app;

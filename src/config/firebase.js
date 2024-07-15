@@ -1,5 +1,5 @@
 import path from 'path'
-import {config} from 'dotenv'
+import { config } from 'dotenv'
 
 import admin from 'firebase-admin';
 import { getFirestore } from 'firebase-admin/firestore';
@@ -11,7 +11,7 @@ process.env.GOOGLE_APPLICATION_CREDENTIALS = path.resolve(process.env.GOOGLE_APP
 
 // Firebase
 admin.initializeApp({
-    credential : admin.credential.cert(process.env.GOOGLE_APPLICATION_CREDENTIALS),
+    credential: admin.credential.cert(process.env.GOOGLE_APPLICATION_CREDENTIALS),
     databaseURL: process.env.DATABASE_URL
 })
 
@@ -24,4 +24,5 @@ if (database) {
     console.log('CONNECT Connected to firebase')
 }
 
-export default db;
+
+export { admin, db };
