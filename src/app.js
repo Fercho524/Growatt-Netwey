@@ -3,6 +3,7 @@ config()
 
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 
 // Routes
 import authRoutes from './routes/auth.routes.js'
@@ -15,6 +16,15 @@ import threesholdRoutes from './routes/threshold.routes.js'
 
 // Config
 const app = express();
+
+const corsOptions = {
+    origin: 'http://localhost:3000', // URL de tu frontend
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Para permitir el envío de cookies si es necesario
+    optionsSuccessStatus: 204 // Para compatibilidad con algunos navegadores antiguos
+};
+
+app.use(cors(corsOptions));
 
 // Middlewares
 app.use(morgan('dev'))

@@ -28,3 +28,24 @@
 ## Thresholds (DB Needed)
 - [ ] POST /device/inverter/voltThreshold 
 - [ ] POST /device/inverter/freqThreshold 
+
+
+
+
+# Token de autenticación para la api
+# 
+# POST localhost:300/api/login
+#
+# {
+# 	"nombre" : "Fernando",
+# 	"email" : "fercho.dev@outlook.com",
+# 	"apellidos" : "Castro Mendieta"
+# }
+#
+# Authorization : xxxxx
+
+
+target = 'mrxd9767@gmail.com'
+subject = 'Critigs Netwey Alert'
+text = 'El correo de prueba funciona, un saludo a toda la gente de Riwanda'
+html = '<p>Cuerpo del correo en <strong>HTML</strong></p>'
