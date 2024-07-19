@@ -30,7 +30,24 @@ import { getToken } from "./GrowattToken.js";
 
 const checkStorageParams = async (id) => {
     console.log(`Printing ID: ${id}`);
-    await new Promise(resolve => setTimeout(resolve, 100));
+    const storageData = await axios.get(`http://localhost:4000/api/device/inverters/${id}/lastData`)
+    const deviceData = storageData[id]
+    const deviceKeys = Object.keys(deviceData)
+
+    deviceKeys.forEach((devID)=>{
+        const device = deviceData[devID]
+
+        const state = {
+            sn : device.
+            batteryState : ,
+            batteryLevel : ,
+            voltageIn : ,
+            voltateOut : ,
+            temperature : ,
+            freqIn : ,
+            freqOut : 
+        }
+    })
 };
 
 const executeInParallel = async (ids) => {

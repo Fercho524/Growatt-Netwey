@@ -21,6 +21,7 @@ export const getAllInverters = async (req, res) => {
 
         res.json(devices)
     } catch (error) {
+		console.log(error)
         res.status(500).json({ message: 'Error al obtener detalles del inversor', error });
     }
 };
@@ -37,6 +38,7 @@ export const getInvertersByPlant = async (req, res) => {
         const inverters = allPlantData[plantID].devices || [];
         res.json(inverters);
     } catch (error) {
+		console.log(error)
         res.status(500).json({ message: 'Error al obtener los inversores', error });
     }
 };
@@ -70,6 +72,7 @@ export const getInverterDetails = async (req, res) => {
 
         res.json(device)
     } catch (error) {
+		console.log(error)
         res.status(500).json({ message: 'Error al obtener detalles del inversor', error });
     }
 };
@@ -86,6 +89,7 @@ export const updateInverter = async (req, res) => {
 
         res.json({ message: 'Inversor actualizado correctamente' });
     } catch (error) {
+		console.log(error)
         res.status(500).json({ message: 'Error al actualizar inversor', error });
     }
 };
@@ -111,6 +115,7 @@ export const getInverterHistory = async (req, res) => {
 
         res.json(history);
     } catch (error) {
+		console.log(error)
         res.status(500).json({ message: 'Error al obtener el historial del inversor', error });
     }
 };
@@ -162,4 +167,3 @@ export const getInvertersBatchData = async (req, res) => {
         res.status(500).json({ message: 'Error al obtener detalles del inversor', error });
     }
 };
-
