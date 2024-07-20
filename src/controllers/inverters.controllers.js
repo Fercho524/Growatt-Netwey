@@ -3,14 +3,17 @@ import growatt from "../config/gowatt.js"
 
 export const getAllInverters = async (req, res) => {
     try {
-        const plants = await growatt.api.getAllPlantData({
-            deviceData: true,
-            plantData: false,
-            weather: false,
+        const options = { 
+            plantData: true, 
+            deviceData: true, 
+            weather: false, 
+            faultlog: false,
+            historyLast: false,
             statusData: false,
-            historyLast: false
-        });
+        };
 
+        let plants = await growatt.api.getAllPlantData(options)
+        
         let devices = []
 
         for (let plant of Object.keys(plants)) {
@@ -19,9 +22,11 @@ export const getAllInverters = async (req, res) => {
             }
         }
 
+        console.log(devices)
+
         res.json(devices)
     } catch (error) {
-		console.log(error)
+        console.log(error)
         res.status(500).json({ message: 'Error al obtener detalles del inversor', error });
     }
 };
@@ -38,7 +43,7 @@ export const getInvertersByPlant = async (req, res) => {
         const inverters = allPlantData[plantID].devices || [];
         res.json(inverters);
     } catch (error) {
-		console.log(error)
+        console.log(error)
         res.status(500).json({ message: 'Error al obtener los inversores', error });
     }
 };
@@ -72,7 +77,7 @@ export const getInverterDetails = async (req, res) => {
 
         res.json(device)
     } catch (error) {
-		console.log(error)
+        console.log(error)
         res.status(500).json({ message: 'Error al obtener detalles del inversor', error });
     }
 };
@@ -89,7 +94,7 @@ export const updateInverter = async (req, res) => {
 
         res.json({ message: 'Inversor actualizado correctamente' });
     } catch (error) {
-		console.log(error)
+        console.log(error)
         res.status(500).json({ message: 'Error al actualizar inversor', error });
     }
 };
@@ -115,7 +120,7 @@ export const getInverterHistory = async (req, res) => {
 
         res.json(history);
     } catch (error) {
-		console.log(error)
+        console.log(error)
         res.status(500).json({ message: 'Error al obtener el historial del inversor', error });
     }
 };
@@ -141,7 +146,7 @@ export const getInverterLastData = async (req, res) => {
 
 export const getInvertersBatchData = async (req, res) => {
     try {
-        const {deviceList} = req.body
+        const { deviceList } = req.body
 
         const plants = await growatt.api.getAllPlantData({
             deviceData: true,
@@ -155,7 +160,7 @@ export const getInvertersBatchData = async (req, res) => {
 
         for (let plant of Object.keys(plants)) {
             for (let deviceId of Object.keys(plants[plant].devices)) {
-                if (deviceList.includes(deviceId)){
+                if (deviceList.includes(deviceId)) {
                     deviceData.push(plants[plant].devices[deviceId])
                 }
             }

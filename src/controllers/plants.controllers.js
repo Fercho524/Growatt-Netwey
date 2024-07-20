@@ -3,10 +3,10 @@ import growatt from "../config/gowatt.js"
 
 export const getPlants = async (req, res) => {
     try {
-        const options = { 
-            plantData: true, 
-            deviceData: false, 
-            weather: false, 
+        const options = {
+            plantData: true,
+            deviceData: false,
+            weather: false,
             faultlog: false,
             historyLast: false,
             statusData: false,
@@ -63,5 +63,25 @@ export const getPlantDayGeneration = async (req, res) => {
         res.status(200).json(generationData);
     } catch (error) {
         res.status(500).json({ error: 'Error fetching daily generation data' });
+    }
+};
+
+
+export const getPlantsLastData = async (req, res) => {
+    try {
+        const options = {
+            plantData: true,
+            deviceData: true,
+            weather: false,
+            faultlog: false,
+            historyLast: true,
+            statusData: false,
+        };
+
+        let allPlantsLastData = await growatt.api.getAllPlantData()
+        res.json(allPlantsLastData);
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: error.message });
     }
 };

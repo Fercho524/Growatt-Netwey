@@ -8,6 +8,7 @@ const router = Router()
 
 
 router.get('/', verifyToken, growattLogin, plantController.getPlants)
+router.get('/last', verifyToken, growattLogin, plantController.getPlantsLastData);
 router.get('/:id', verifyToken, growattLogin, plantController.getPlantById);
 router.post('/:id/history', verifyToken, growattLogin, plantController.getPlantHistory);
 router.get('/:id/day', verifyToken, growattLogin, plantController.getPlantDayGeneration);

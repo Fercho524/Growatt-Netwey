@@ -1,75 +1,113 @@
-// const monitorFreqOutput = async () => {
-//     try {
-//         const response = await axios.get(`http://localhost:4000/api/device/inverters/${plantID}/lastData`);
-//         const data = response.data;
-//         const freqOutPut = data[plantID].devices["TSEFDCD0BE"].historyLast.freqOutPut;
-
-//         console.log(`Frecuencia de salida actual: ${freqOutPut} Hz`);
-
-//         if (freqOutPut > threshold) {
-//             console.log(`Alerta: Frecuencia de salida (${freqOutPut} Hz) supera el umbral (${threshold} Hz)`);
-//             sendMail(
-//                 'mrxd9767@gmail.com',
-//                 'Netwey',
-//                 `Alerta: Frecuencia de salida (${freqOutPut} Hz) supera el umbral (${threshold} Hz)`,
-//                 `Alerta: Frecuencia de salida (${freqOutPut} Hz) supera el umbral (${threshold} Hz)`
-//             );
-//         }
-//     } catch (error) {
-//         console.error('Error al obtener los datos:', error);
-//     }
-// };
-
 import axios from "axios";
 
 import { sendMail } from "./sendMail.js";
 
 import { getPlants } from "./GrowattToken.js";
 import { getToken } from "./GrowattToken.js";
+import { accessToken } from "./GrowattToken.js";
+import { db, admin } from "../config/firebase.js";
 
 
-const checkStorageParams = async (id) => {
-    console.log(`Printing ID: ${id}`);
-    const storageData = await axios.get(`http://localhost:4000/api/device/inverters/${id}/lastData`)
-    const deviceData = storageData[id]
-    const deviceKeys = Object.keys(deviceData)
 
-    deviceKeys.forEach((devID)=>{
-        const device = deviceData[devID]
+const checkStorageParams = async (token = null, plantID) => {
+    if (!token) {
+        let token = await getToken();
+    }
 
-        const state = {
-            sn : device.
-            batteryState : ,
-            batteryLevel : ,
-            voltageIn : ,
-            voltateOut : ,
-            temperature : ,
-            freqIn : ,
-            freqOut : 
+    try {
+        const response = await axios.get(
+            `${process.env.GROWATT_HOST}/api/device/inverters/${plantID}/lastData`,
+            {
+                headers: {
+                    "Authorization": `${accessToken}`,
+                    'Access-Control-Allow-Origin': '*',
+                },
+                timeout: 500000
+            }
+        );
+
+        if (response.status === 403) {
+            token = await getToken();
+            if (token) {
+                return checkStorageParams(token,plantID);
+            } else {
+                return [];
+            }
         }
-    })
+
+        const responseData = response.data
+        const plantIDs = Object.keys(responseData)
+        const plantLastData = responseData[plantIDs[0]]
+        const deviceIDs = Object.keys(plantLastData.devices)
+
+        deviceIDs.forEach((deviceID) => {
+            const device = plantLastData.devices[deviceID]
+
+            const currentState = {
+                sn: deviceID,
+                growattType: device.growattType,
+                capacity: device.statusData.capacity,
+                usedEnergyToday: device.totalData.useEnergyToday,
+                vAcInput: device.statusData.vAcInput,
+                vAcOutput: device.statusData.vAcOutput,
+                fAcInput: device.statusData.fAcInput,
+                fAcOutput: device.statusData.fAcOutput,
+                invStatus: device.statusData.invStatus,
+                loadPrecent: device.statusData.loadPrecent,
+                vBat: device.historyLast.vBat,
+                temperature: device.historyLast.temperature,
+                cycleCount: device.historyLast.cycleCount,
+            }
+
+            // If not state in firebase
+            //  saveInfo in Firebase
+            // Else
+            //  get storage config
+            // 
+            // get oldState
+            // compare oldState with currentState
+            //
+            // if variations
+            //  sendAlert
+            //
+            // saveInfo in Firebase
+        })
+    } catch (error) {
+        console.error('Error al obtener la lista de plantas:');
+        return [];
+    }
 };
 
-const executeInParallel = async (ids) => {
-    const tasks = ids.map(id => checkStorageParams(id));
+
+const executeInParallel = async (plantIDs) => {
+    const tasks = plantIDs.map(plantID => checkStorageParams(plantID));
     await Promise.all(tasks);
 };
 
-const startPeriodicExecution = async (ids, interval) => {
+
+const startPeriodicExecution = async (plantIDs, interval) => {
     while (true) {
-        await executeInParallel(ids);
+        await executeInParallel(plantIDs);
         console.log('All IDs have been printed.');
         await new Promise(resolve => setTimeout(resolve, interval));
     }
 };
 
 
-// Todo esto se guardará y dependerá de firebase
+
+console.log("Plantas a monitorear")
 const plants = await getPlants()
-const ids = Object.keys(ids)
+const ids = Object.keys(plants)
+
+console.log(ids)
+
 const history = {}
-const interval = 60*5;
+const interval = 60 * 5;
 const threshold = 60.0;
 
 
-startPeriodicExecution(ids, interval);
+const storageParams = await checkStorageParams(ids[0])
+console.log(storageParams)
+
+
+//startPeriodicExecution(ids, interval);
