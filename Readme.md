@@ -50,16 +50,16 @@ POST http://localhost:4000/api/plants/:plantId/history
 }
 ```
 
-## 2.4 Ver historial de un día de la planta ✅
+### 2.4 Ver historial de un día de la planta ✅
 
 ```rest
 GET http://localhost:4000/api/plants/:plantId/day?date=2024-07-06
 ```
 
-## 2.5 Ver historial fallos de una planta ✅
+### 2.5 Ver historial fallos de una planta ✅
 
 ```rest
-http://localhost:4000/api/plants/:plantId/fault
+GET http://localhost:4000/api/plants/:plantId/fault
 ```
 
 ## 3 Gestión de Dataloggers
@@ -88,7 +88,6 @@ GET http://localhost:4000/api/dataloggers/register/:datalogSn
 PUT http://localhost:4000/api/dataloggers/register/:datalogSn
 ```
 
-
 ## 4 Dispositivos
 
 ### 4.1 Ver todos los dispositivos ❌
@@ -112,7 +111,7 @@ GET http://localhost:4000/api/devices/TSEFDCD0BE?plantId=2461525
 ### 4.3 Actualizar dispositivo ❔
 
 ```rest
-
+PUT http://localhost:4000/api/devices/TSEFDCD0BE
 ```
 
 ### 4.4 Historial del dispositivo ✅
