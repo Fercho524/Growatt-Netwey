@@ -1,11 +1,18 @@
 import axios from "axios";
 
+
 import { sendMail } from "./sendMail.js";
 
 import { getPlants } from "./GrowattToken.js";
 import { getToken } from "./GrowattToken.js";
 import { accessToken } from "./GrowattToken.js";
 import { db, admin } from "../config/firebase.js";
+
+
+const getGlobalThresholds = async () => {
+    const doc = await db.collection('storage_config').doc('global_thresholds').get();
+    return doc.exists ? doc.data() : {};
+};
 
 
 
@@ -29,7 +36,7 @@ const checkStorageParams = async (token = null, plantID) => {
         if (response.status === 403) {
             token = await getToken();
             if (token) {
-                return checkStorageParams(token,plantID);
+                return checkStorageParams(token, plantID);
             } else {
                 return [];
             }
@@ -40,7 +47,9 @@ const checkStorageParams = async (token = null, plantID) => {
         const plantLastData = responseData[plantIDs[0]]
         const deviceIDs = Object.keys(plantLastData.devices)
 
-        deviceIDs.forEach((deviceID) => {
+        const globalThresholds = await getGlobalThresholds();
+
+        deviceIDs.forEach(async (deviceID) => {
             const device = plantLastData.devices[deviceID]
 
             const currentState = {
@@ -59,18 +68,21 @@ const checkStorageParams = async (token = null, plantID) => {
                 cycleCount: device.historyLast.cycleCount,
             }
 
-            // If not state in firebase
-            //  saveInfo in Firebase
-            // Else
-            //  get storage config
-            // 
-            // get oldState
-            // compare oldState with currentState
-            //
-            // if variations
-            //  sendAlert
-            //
-            // saveInfo in Firebase
+            // Comparar currentState con globalThresholds y enviar alerta si es necesario
+            let alertMessage = '';
+            for (const key in globalThresholds) {
+                if (currentState[key] !== undefined && parseFloat(currentState[key]) > parseFloat(globalThresholds[key])) {
+                    alertMessage += `Alert: ${key} value ${currentState[key]} exceeds threshold ${globalThresholds[key]}\n`;
+                }
+            }
+
+            if (alertMessage) {
+                await sendMail(process.env.ALERT_EMAIL, 'Growatt Device Alert', alertMessage, `<pre>${alertMessage}</pre>`);
+            }
+
+            // Guardar el estado actual en Firebase
+            const deviceConfig = db.collection('storage_config').doc(deviceID);
+            await deviceConfig.set(currentState, { merge: true });
         })
     } catch (error) {
         console.error('Error al obtener la lista de plantas:');
@@ -94,20 +106,16 @@ const startPeriodicExecution = async (plantIDs, interval) => {
 };
 
 
+const main = async () => {
+    console.log("Plantas a monitorear");
+    const plants = await getPlants(accessToken);
+    const ids = Object.keys(plants);
 
-console.log("Plantas a monitorear")
-const plants = await getPlants()
-const ids = Object.keys(plants)
+    console.log(ids);
 
-console.log(ids)
+    const interval = 60 * 5 * 1000; // 5 minutes in milliseconds
 
-const history = {}
-const interval = 60 * 5;
-const threshold = 60.0;
+    await startPeriodicExecution(ids, interval);
+};
 
-
-const storageParams = await checkStorageParams(ids[0])
-console.log(storageParams)
-
-
-//startPeriodicExecution(ids, interval);
+main();

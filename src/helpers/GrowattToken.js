@@ -1,7 +1,7 @@
-import fs from 'fs';
 import axios from 'axios';
-import path from 'path';
 
+console.log(process.env.GROWATT_HOST)
+console.log(process.env.SMNTP_USER)
 
 export const getToken = async () => {
     try {
@@ -63,3 +63,4 @@ export const getPlants = async (token = null) => {
 
 
 export const accessToken = await getToken()
+console.log(accessToken)
