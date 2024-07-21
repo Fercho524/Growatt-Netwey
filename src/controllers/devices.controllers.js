@@ -35,13 +35,11 @@ export const getAllDevices = async (req, res) => {
 export const getDeviceDetails = async (req, res) => {
     try {
         const { sn } = req.params;
+        const { plantId } = req.query;
 
         const plants = await growatt.api.getAllPlantData({
-            deviceData: true,
-            plantData: false,
-            weather: false,
-            statusData: false,
-            historyLast: false
+            plantId: plantId,
+            deviceData: true
         });
 
         let devices = []
@@ -88,7 +86,6 @@ export const getDeviceBatchLastData = async (req, res) => {
         const { deviceList } = req.body
 
         const plants = await growatt.api.getAllPlantData({
-            deviceData: true,
             plantData: false,
             weather: false,
             statusData: false,
@@ -116,17 +113,19 @@ export const getDeviceBatchLastData = async (req, res) => {
 export const getDeviceHistory = async (req, res) => {
     try {
         const { sn } = req.params;
-        const { startDate, endDate } = req.body;
+        const { plantId,startDate, endDate } = req.body;
 
         const options = {
             historyLastStartDate: new Date(startDate),
             historyLastEndDate: new Date(endDate),
-            plantId: sn
+            plantId: plantId
         };
 
-        const history = await growatt.api.getAllPlantData(options);
+        const plantHistory = await growatt.api.getAllPlantData(options);
+        res.json(plantHistory);
+        //const history = plantHistory[plantId].devices[sn]
 
-        res.json(history);
+        
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: 'Error al obtener el historial del inversor', error });

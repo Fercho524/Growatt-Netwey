@@ -9,7 +9,7 @@ import cors from 'cors';
 import authRoutes from './routes/auth.routes.js'
 import dataloggersRoutes from './routes/dataloggers.routes.js'
 import indexRoutes from './routes/index.routes.js'
-import deviceRoutes from './routes/devices.routes.js'
+import deviceRoutes from './routes/device.routes.js'
 import plantRoutes from './routes/plants.routes.js'
 import threesholdRoutes from './routes/threshold.routes.js'
 
@@ -17,14 +17,15 @@ import threesholdRoutes from './routes/threshold.routes.js'
 // Config
 const app = express();
 
-// const corsOptions = {
-//     origin: 'http://localhost:3000', // URL de tu frontend
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//     credentials: true, // Para permitir el envío de cookies si es necesario
-//     optionsSuccessStatus: 204 // Para compatibilidad con algunos navegadores antiguos
-// };
+// Cors Policy
+const corsOptions = {
+    origin: process.env.NETWEY_FRONT_HOST,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Middlewares
 app.use(morgan('dev'))

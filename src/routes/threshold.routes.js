@@ -6,8 +6,8 @@ import { growattLogin } from "../middlewares/growattLogin.middleware.js";
 const router = Router()
 
 
-router.post('/frequency', verifyToken,growattLogin ,dataloggerController.setFrequencyThreshold)
-router.post('/voltaje', verifyToken,growattLogin ,dataloggerController.setVoltageThreshold)
+router.post('/inverter', verifyToken,growattLogin ,dataloggerController.setInverterParamsThresholds)
+router.post('/storage', verifyToken,growattLogin ,dataloggerController.setStorageParamsThresholds)
 
 
 export default router;

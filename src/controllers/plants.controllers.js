@@ -88,7 +88,7 @@ export const getPlantFaultLog = async (req, res) => {
         
         // Decidir entre estas 2
         const plant = await growatt.api.getAllPlantData(options);
-        const plantFault = await growatt.api.getNewPlantFaultLog(plantID,date,sn,page)
+        //const plantFault= await growatt.api.getNewPlantFaultLog(plantID,date,sn,page)
         
         res.status(200).json(plant);
     } catch (error) {
@@ -111,25 +111,5 @@ export const getPlantDeviceLastData = async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: 'Error al obtener los últimos datos del inversor', error });
-    }
-};
-
-
-export const getAllPlantsDeviceLastData = async (req, res) => {
-    try {
-        const options = {
-            plantData: true,
-            deviceData: true,
-            weather: false,
-            faultlog: true,
-            historyLast: true,
-            statusData: false,
-        };
-
-        let allPlantsLastData = await growatt.api.getAllPlantData()
-        res.json(allPlantsLastData);
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ error: error.message });
     }
 };

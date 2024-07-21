@@ -37,13 +37,13 @@ export const getDataLoggerRegister = async (req, res) => {
 
 
 export const setDataloggerRegister = async (req, res) => {
-    const { id } = req.params;
+    const { sn } = req.params;
     const { addr, value } = req.body;
 
     try {
-        const result = await growatt.session.setDataLoggerRegister(id, addr, value);
+        const result = await growatt.session.setDataLoggerRegister(sn, addr, value);
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ error: `Error updating datalogger with ID ${id}` });
+        res.status(500).json({ error: `Error updating datalogger with ID ${sn}` });
     }
 };
