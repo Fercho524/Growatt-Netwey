@@ -152,10 +152,46 @@ GET http://localhost:4000/api/devices/plant/2461525
 
 ### 5.1 Alarmas de inversores ❔
 
+No implementado debido a no encontrar dispositivos de tipo inversor en la cuenta de Netwey
+
+### 5.2 Configurar umbrales de almacenamiento ✅
+
 ```rest
+POST http://localhost:4000/api/config/storage
+
+{
+  "capacity": "75%",
+  "usedEnergyToday": "30kWh",
+  "vAcInput": "230V",
+  "vAcOutput": "220V",
+  "fAcInput": "50Hz",
+  "fAcOutput": "50Hz",
+  "invStatus": "Normal",
+  "loadPrecent": "80%",
+  "vBat": "48V",
+  "temperature": "50C",
+  "cycleCount": "500"
+}
 ```
 
-### 5.2 Alarmas de almacenamiento ❔
+### 5.3 Guardar estado del dispositivo de almacenamiento ✅
 
 ```rest
+POST http://localhost:4000/api/config/storage
+
+{
+  "deviceID": "TSEFDCD0BE",
+  "growattType": "storage",
+  "capacity": "75%",
+  "usedEnergyToday": "30kWh",
+  "vAcInput": "230V",
+  "vAcOutput": "220V",
+  "fAcInput": "50Hz",
+  "fAcOutput": "50Hz",
+  "invStatus": "Normal",
+  "loadPrecent": "80%",
+  "vBat": "48V",
+  "temperature": "50C",
+  "cycleCount": "500"
+}
 ```

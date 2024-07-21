@@ -3,7 +3,6 @@ import axios from 'axios';
 import path from 'path';
 
 
-
 export const getToken = async () => {
     try {
         const response = await axios.post(

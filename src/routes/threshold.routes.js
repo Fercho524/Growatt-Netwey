@@ -7,7 +7,8 @@ const router = Router()
 
 
 router.post('/inverter', verifyToken,growattLogin ,dataloggerController.setInverterParamsThresholds)
-router.post('/storage', verifyToken,growattLogin ,dataloggerController.setStorageParamsThresholds)
+router.post('/storage', verifyToken,growattLogin ,dataloggerController.saveStorageDeviceLastData)
+router.post('/storageThresholds', verifyToken,growattLogin ,dataloggerController.setStorageDeviceThresholds)
 
 
 export default router;
