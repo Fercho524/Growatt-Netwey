@@ -9,7 +9,7 @@ import cors from 'cors';
 import authRoutes from './routes/auth.routes.js'
 import dataloggersRoutes from './routes/dataloggers.routes.js'
 import indexRoutes from './routes/index.routes.js'
-import inverterRoutes from './routes/inverters.routes.js'
+import deviceRoutes from './routes/devices.routes.js'
 import plantRoutes from './routes/plants.routes.js'
 import threesholdRoutes from './routes/threshold.routes.js'
 
@@ -37,7 +37,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/config', threesholdRoutes)
 app.use('/api/plants', plantRoutes)
 app.use('/api/dataloggers', dataloggersRoutes)
-app.use('/api/device/inverters', inverterRoutes)
+app.use('/api/devices', deviceRoutes)
 
 
 export default app;

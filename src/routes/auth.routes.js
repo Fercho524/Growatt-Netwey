@@ -5,7 +5,7 @@ import * as authController from '../controllers/auth.controllers.js'
 const router = Router()
 
 
-router.post('/login', authController.loginUser);
+router.post('/login', authController.getSessionToken);
 
 
 export default router;

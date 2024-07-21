@@ -4,9 +4,8 @@ import { config } from 'dotenv'
 import admin from 'firebase-admin';
 import { getFirestore } from 'firebase-admin/firestore';
 
-
-// Variables de entorno
 config()
+
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.resolve(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
 // Firebase
@@ -19,10 +18,8 @@ admin.initializeApp({
 const database = admin.database()
 const db = getFirestore();
 
-
 if (database) {
     console.log('CONNECT Connected to firebase')
 }
-
 
 export { admin, db };

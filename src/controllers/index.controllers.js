@@ -1,6 +1,6 @@
-export const sayHello = (req,res) => {
+export const indexMessage = (req,res) => {
     res.json({
-        'message': 'welcome',
+        'message': 'Welcome',
         'version': '0.0.1',
         'author': 'fercho524'
     })

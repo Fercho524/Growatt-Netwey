@@ -4,9 +4,8 @@ import jwt from 'jsonwebtoken';
 
 config()
 
-const SECRET_KEY = process.env.SECRET_KEY
 
-export const loginUser = async (req, res) => {
+export const getSessionToken = async (req, res) => {
     const { nombre, email,apellidos } = req.body;
 
     try {
@@ -28,7 +27,7 @@ export const loginUser = async (req, res) => {
                 email: user.email,
                 rol: user.rol
             },
-            SECRET_KEY,
+            process.env.SECRET_KEY,
             { expiresIn: '168h' }
         );
 

@@ -1,15 +1,17 @@
 import { Router } from "express";
+
 import * as dataloggerController from "../controllers/dataloggers.controllers.js";
+
 import { verifyToken } from '../middlewares/auth.middleware.js';
 import { growattLogin } from "../middlewares/growattLogin.middleware.js";
 
 const router = Router()
 
 
-router.get('/list', verifyToken, growattLogin, dataloggerController.listDataLoggers);
-router.get('/:id', verifyToken, growattLogin, dataloggerController.getDataLoggerById);
-router.put('/:id', verifyToken, growattLogin, dataloggerController.updateDataLoggerById);
-router.delete('/:id', verifyToken, growattLogin, dataloggerController.deleteDatalogger);
+router.get('/', verifyToken, growattLogin, dataloggerController.getAllDataLoggers);
+router.get('/details/:sn', verifyToken, growattLogin, dataloggerController.getDataloggerDetails);
+router.get('/register/:sn',verifyToken, growattLogin,dataloggerController.getDataLoggerRegister)
+router.put('/register/:sn',verifyToken, growattLogin,dataloggerController.setDataloggerRegister)
 
 
 export default router;

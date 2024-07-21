@@ -1,7 +1,7 @@
 import growatt from "../config/gowatt.js"
 
 
-export const listDataLoggers = async (req, res) => {
+export const getAllDataLoggers = async (req, res) => {
     try {
         let dataloggers = await growatt.api.getDataLoggers()
         res.status(200).json(dataloggers);
@@ -11,8 +11,9 @@ export const listDataLoggers = async (req, res) => {
 }
 
 
-export const getDataLoggerById = async (req, res) => {
-    const { id: sn } = req.params;
+export const getDataloggerDetails = async (req, res) => {
+    const { sn } = req.params;
+
     try {
         let dataloggers = await growatt.api.getDataLoggers()
         const logger = dataloggers.find((logger) => logger.sn == sn)
@@ -23,7 +24,19 @@ export const getDataLoggerById = async (req, res) => {
 };
 
 
-export const updateDataLoggerById = async (req, res) => {
+export const getDataLoggerRegister = async (req, res) => {
+    const { sn } = req.params;
+
+    try {
+        const register = await growatt.api.getDataLoggerRegister(sn, 1)
+        res.status(200).json(register)
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+
+export const setDataloggerRegister = async (req, res) => {
     const { id } = req.params;
     const { addr, value } = req.body;
 
@@ -33,9 +46,4 @@ export const updateDataLoggerById = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: `Error updating datalogger with ID ${id}` });
     }
-};
-
-
-export const deleteDatalogger = (req, res) => {
-    res.status(501).json({ message: 'Función no soportada por la API de Growatt' });
 };
