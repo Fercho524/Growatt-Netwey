@@ -1,5 +1,21 @@
 # Growatt - Netwey
 
+## Setup
+
+```sh
+npm install
+```
+
+```sh
+npm start
+```
+
+En otra terminal
+
+```sh
+npm run monitor
+```
+
 ## 1 Autenticación
 
 ### 1.1 Inicio de sesión ✅
