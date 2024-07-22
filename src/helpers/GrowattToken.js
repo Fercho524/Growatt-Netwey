@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-console.log(process.env.GROWATT_HOST)
-console.log(process.env.SMNTP_USER)
 
 export const getToken = async () => {
     try {
@@ -20,6 +18,7 @@ export const getToken = async () => {
             }
         );
 
+        console.log("Loged to Growatt-Netwey API")
         return response.data.token;
     } catch (error) {
         console.error('Error al obtener el token de acceso:');
@@ -62,5 +61,4 @@ export const getPlants = async (token = null) => {
 };
 
 
-export const accessToken = await getToken()
-console.log(accessToken)
+export let ACCESS_TOKEN = await getToken()
