@@ -14,6 +14,7 @@ export const getPlantList = async (req, res) => {
         let getAllPlantData = await growatt.api.getAllPlantData(options)
         res.json(getAllPlantData);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: error.message });
     }
 }
